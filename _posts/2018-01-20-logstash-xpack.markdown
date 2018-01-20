@@ -46,11 +46,6 @@ bin/kibana-plugin install x-pack
 
 ```
 
-#### kibana에 x-pack 설치
-```
-bin/kibana-plugin install x-pack
-```
-
 #### kibana.yml 설정
 ```
 server.host: example-monitoring.net
