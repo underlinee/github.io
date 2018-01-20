@@ -36,7 +36,7 @@ bin/elasticsearch
 ## kibana 세팅
 -------------
 
-#### kibana 설치 & x-p
+#### kibana 설치 & x-pack 설치
 ```
 curl -O https://artifacts.elastic.co/downloads/kibana/kibana-6.1.2-darwin-x86_64.tar.gz
 
