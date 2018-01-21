@@ -28,7 +28,6 @@ paginate: 5
 paginate_path: "/page:num/"
 inter_post_navigation: false
 highlightjs_theme: "monokai-sublime"
-disqus_shortname: underlinee
 
 # Archive settings (see https://github.com/jekyll/jekyll-archives/)
 jekyll-archives:
@@ -40,8 +39,8 @@ jekyll-archives:
     category: '/category/:name/'
     tag: '/tag/:name/'
 
-# Disqus comments
-# disqus_shortname: bencentra
+#Disqus comments
+disqus_shortname: underlinee
 
 #Google analytics
 ga_tracking_id: "UA-112755509-1"
