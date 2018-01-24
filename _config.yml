@@ -4,6 +4,7 @@ gems:
   - jekyll-archives # Sorry, not GitHub pages friendly!
   - jekyll-sitemap
   - jekyll-paginate
+  - jekyll-redirect-from
 
 exclude:
   - "/vendor/"
@@ -66,4 +67,5 @@ ga_tracking_id: "UA-112755509-1"
 # Social sharing protocols
 # These are for automatically generating sharing metadata for FB and Twitter
 # OS Protocol is for sharing the source of your site, if you're interested. For more, see osprotocol.com
-
+plugins_dir:
+  - jekyll-redirect-from
