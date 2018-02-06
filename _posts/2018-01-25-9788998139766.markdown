@@ -7,7 +7,7 @@ tags:	객체지향의사실과오해 객체설계 조영호
 ---
 
 <a href="http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=60550259&start=slayer">
-  <img class="book" src="http://image.aladin.co.kr/product/6055/2/cover/8998139766_1.jpg"/>
+  <img class="book" style="width: 30%; height: 30%" src="http://image.aladin.co.kr/product/6055/2/cover/8998139766_1.jpg"/>
 </a>
 
 <br/> 
