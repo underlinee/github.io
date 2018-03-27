@@ -42,8 +42,8 @@ tail -n 1000000 application.log | grep "Working" | cut -d ':' -f1,2 | uniq -c
 <br/>
 
 #### gz으로 압축된 log 분석
-날짜가 지나면 압축되도록 설정해 두었다면 gz 파일을 열어봐야 하는데 tail은 사용할 수 없고 zcat으로 tail을 할 수도 없댜. 
-gzip에 좋은 옵션이 많았다. tail 앞에 gzip -cd 를 추가해 동일한 결과를 확인할 수 있다.
+날짜가 지나면 압축되도록 설정해 두었다면 gz 파일을 열어봐야 하는데 귀찮은 일이다. gz 파일에 대해서 tail은 사용할 수 없고 zcat으로 일부만 확인할 수도 없댜. 
+다행히 gzip에 좋은 옵션이 많았다. tail 앞에 gzip -cd 를 추가해 동일한 결과를 확인할 수 있다.
 ```
 // man gzip
 ... 
