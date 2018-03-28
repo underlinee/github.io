@@ -1,0 +1,84 @@
+---
+layout: post
+title:  "이펙티브 SQL - 서브 쿼리"
+date:   2018-03-27 00:11:59
+categories: Book
+tags:	sql subquery join  
+---
+
+## 서브쿼리를 어디에 활용할 수 있는지 알아 두자
+
+서브쿼리는 완전한 SELECT 문을 괄호로 둘러싸고 괄호 밖에는 AS절과 함께 별칭을 주는 것이다. 다른 SELECT, UPDATE, INSERT, DELETE 문 내의 여러 곳에 서브 쿼리를 사용할 수 있다.  서브 쿼리의 활용 방법을 정리하면 다음과 같다. 
+
+- 테이블 서브쿼리 : 테이블이나 뷰의 이름, 테이블을 반환하는 저장 프로시저나 함수 이름을 사용할 수 있는 곳이라면 어디나 활용할 수 있다. 조인을 수행하기 전에 필터링이 필요한 FROM 절에서 특히 유용하다. 
+
+```
+SELECT BeefRecipes.RecipeTitle
+FROM (
+    SELECT Recipes.RecipeID, Recipes.RecipeTitle
+    FROM Recipes
+        INNER JOIN Recipe_Ingredients
+            ON Recipes.RecipeID = Recipe_Ingredients.RecipeID 
+        INNER JOIN Ingredients
+            ON  Ingredients.IngredientID = Recipe_Ingredients.IngredientID
+WHERE  Ingredients.IngredientName = ‘Beef’
+) AS BeefRecipes;
+```
+
+- 단일 컬럼 테이블 서브 쿼리: 테이블 서브쿼리를 활용할 수 있다면 어디나 활용가능하다. 컬럼이 하나이므로 반환되는 칼럼은 IN 이나 NOT IN 조건의 목록을 제공하는 데 사용된다. 
+
+- 스칼라 서브 쿼리: 단일 로우에 있는 한 컬럼에 값을 0개 또는 한 개만 반환한다. 단일 컬럼 테이블 서브쿼리나, 테이블 서브쿼리를 사용할 수 있는 곳에 모두 사용할 수 있다. 다른 컬럼 및 연산자와 함께 표현식에서도 사용할 수 있다. 
+
+```
+…
+HAVING AVG(Product_Vendors.DaysToDeliver) > (
+    SELECT AVG(DaysToDeliver)
+    FROM Product_Vendors
+    );
+```
+
+<br/>
+
+## 연관성 있는 서브쿼리와 연관성 없는 서브쿼리의 차이점을 파악하자
+
+연관성 없는 서브 쿼리는 주 쿼리에 있는 데이터에 의존하지 않으며, 독립적으로 수행될 수 있다. 일반적으로 FROM절의 필터링된 데이터 집합이나, WHERE 절의 IN 조건에 오는 단일 컬럼 데이터 집합으로 사용된다.
+```
+SELECT Recipes.RecipeTitle
+FROM Recipes
+WHERE Recipes.RecipeClassID IN (
+    SELECT rc.RecipeClassID
+    FROM Recipe_Classes AS rc
+    WHERE rc.RecipeClassDescription IN 
+        (’Salad’, ’Soup’, ‘Main course’)
+);
+```
+
+연관성 있는 서브쿼리는 WHERE 절이나 HAVING 절에서 주 쿼리가 제공하는 값에 의존하는 조건을 하나 이상 사용하는 서브쿼리다. 데이터베이스 엔진은 주 쿼리에서 반환되는 모든 로우에서 서브쿼리르 한 번씩 수행해야 하기 때문에 다른 방법에 대해 느리게 수행될 수 있으나, 데이터 베이스 시스템의 최적화로 항상 느리다고 할 수는 없다. 
+
+```
+SELECT Recipe_Classes.RecipeClassDescription, (
+    SELECT COUNT(*)
+    FROM Recipes
+    WHERE Recipes.RecipeClassID =
+        Recipe_Classes.RecipeClassID
+    ) AS RecipeCount
+FROM Recipe_Classes;
+```
+<br/>
+
+## 서브쿼리 대신 조인을 사용해 더 효율적인 쿼리를 작성하자
+
+주어진 문제를 절차적인 순서대로 분해해서 해결해야 바람직한 방법이라는 생각은 금물이다. SQL은 로우별이 아닌 데이터 집합을 대상으로 최적의 작업을 수행한다. 다양한 접근법을 어떻게 처리하는지 확인해서 DBMS의 옵티마이저가 선호하는 해결책으로 결정해야 한다. 일반적으로 IN 절에 서브쿼리를 사용하여 특정 데이터를 찾는 것 보다는 조인을 사용하는 것이 더 효율적이다. 데이터베이스 엔진은 조인에 대한 최적화를 더 잘 수행하기 때문이다. 
+```
+SELECT s.StyleNm
+FROM Styles AS s
+    INNER JOIN Countries AS c
+        ON s.CountryFK = c.CountryID
+WHERE c.CountryNM = "Belgium";
+```
+
+<br/>
+
+<a href="http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=124421253">
+  <img class="book" style="width: 30%; height: 30%" src="http://image.aladin.co.kr/product/12442/12/cover/k802531656_1.jpg"/>
+</a>
