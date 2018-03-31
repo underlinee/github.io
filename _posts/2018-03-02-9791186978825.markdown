@@ -3,7 +3,9 @@ layout: post
 title:  "이펙티브 파이썬 - 파이썬다운 생각"
 date:   2018-03-02 00:10:59
 categories: DevBook
-tags:	Python effective 
+tags:	Python effective
+img: "http://image.aladin.co.kr/product/8027/75/cover/k212434638_1.jpg"
+shelf: true
 ---
 
 

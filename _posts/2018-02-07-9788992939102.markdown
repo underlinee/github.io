@@ -3,7 +3,9 @@ layout: post
 title:  "Release It - 성공적인 출시를 위한 소프트웨어 설계와 배치"
 date:   2018-02-06 16:43:59
 categories: DevBook
-tags:	ReleaseIt 아키텍쳐설계 소프트웨어배치 안정성  
+tags:	ReleaseIt 아키텍쳐설계 소프트웨어배치 안정성
+img: "http://image.aladin.co.kr/product/100/65/cover/8992939108_1.jpg"
+shelf: true
 ---
 
 ## 설계의 목표
