@@ -2,7 +2,7 @@
 layout: post
 title:  "이펙티브 파이썬 - 함수"
 date:   2018-03-03 00:10:59
-categories: Book
+categories: DevBook
 tags:	키워드인수 키워드전용인수 클로저 제너레이터 기본인수 가변위치인수
 ---
 

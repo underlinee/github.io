@@ -2,7 +2,7 @@
 layout: post
 title:  "구글 자연어 처리 API 사용하기"
 date:   2018-01-20 18:43:59
-categories: Devlog
+categories: DevLog
 tags:	python 자연어처리 
 ---
 

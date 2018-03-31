@@ -2,7 +2,7 @@
 layout: post
 title:  "Redis TTL -1 인 값이 생기는 버그 해결"
 date:   2018-02-28 18:43:59
-categories: Devlog
+categories: DevLog
 tags:	Redis 버그 expire ttl 
 ---
 

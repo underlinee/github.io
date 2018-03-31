@@ -2,7 +2,7 @@
 layout: post
 title:  "유지보수 가능한 코딩의 기술 - 클린코드의 비밀"
 date:   2018-03-30 18:43:59
-categories: Book
+categories: DevBook
 tags:	클린코드 유지보수 리팩토링 테스트 
 ---
 

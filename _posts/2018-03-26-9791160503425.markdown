@@ -2,7 +2,7 @@
 layout: post
 title:  "이펙티브 SQL - 데이터 모델 설계를 변경할 수 없는 경우"
 date:   2018-03-25 00:10:59
-categories: Book
+categories: DevBook
 tags:	sql union view  
 ---
 

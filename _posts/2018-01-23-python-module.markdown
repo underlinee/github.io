@@ -2,7 +2,7 @@
 layout: post
 title:  "ModuleNotFoundError: No module named 해결하기"
 date:   2018-01-22 20:13:59
-categories: Devlog
+categories: DevLog
 tags:	python module import sys.path
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title:  "이펙티브 SQL - 서브 쿼리"
 date:   2018-03-27 00:11:59
-categories: Book
+categories: DevBook
 tags:	sql subquery join  
 ---
 

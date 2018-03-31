@@ -2,7 +2,7 @@
 layout: post
 title:  "이펙티브 파이썬 - 내장 모듈"
 date:   2018-03-06 00:10:59
-categories: Book
+categories: DevBook
 tags:	wraps contextlib contextmanager copyreg pickle datetime decimal
 ---
 

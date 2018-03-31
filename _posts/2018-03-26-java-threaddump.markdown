@@ -2,7 +2,7 @@
 layout: post
 title:  "java 스레드 덤프 분석 - 병목 지점 확인하기"
 date:   2018-03-26 00:43:59
-categories: Devlog
+categories: DevLog
 tags:   java thread dump bottleneck 
 ---
 

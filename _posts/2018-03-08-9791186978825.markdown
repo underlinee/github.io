@@ -2,7 +2,7 @@
 layout: post
 title:  "이펙티브 파이썬 - 제품화"
 date:   2018-03-08 00:10:59
-categories: Book
+categories: DevBook
 tags:	tracemalloc repr pdb cProfile
 ---
 

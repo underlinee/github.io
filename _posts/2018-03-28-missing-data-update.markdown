@@ -2,7 +2,7 @@
 layout: post
 title:  "DB에 누락된 정보를 로그에서 추출하여 수동 업데이트 하기"
 date:   2018-03-28 00:00:59
-categories: Devlog
+categories: DevLog
 tags:   diff sort awk tr
 ---
 

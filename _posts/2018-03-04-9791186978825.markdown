@@ -2,7 +2,7 @@
 layout: post
 title:  "이펙티브 파이썬 - 클래스와 상속"
 date:   2018-03-04 00:10:59
-categories: Book
+categories: DevBook
 tags:   비공개속성 파이썬 classmethod super mixin 믹스인
 ---
 

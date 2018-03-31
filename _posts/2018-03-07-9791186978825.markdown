@@ -2,7 +2,7 @@
 layout: post
 title:  "이펙티브 파이썬 - 협력"
 date:   2018-03-07 00:10:59
-categories: Book
+categories: DevBook
 tags:	docstring package pyvenv exception
 ---
 

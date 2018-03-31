@@ -2,7 +2,7 @@
 layout: post
 title:  "gz 로그 파일 커맨드 라인으로 분석하기"
 date:   2018-03-26 00:00:59
-categories: Devlog
+categories: DevLog
 tags:   gz zcat tail log 
 ---
 

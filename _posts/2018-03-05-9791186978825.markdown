@@ -2,7 +2,7 @@
 layout: post
 title:  "이펙티브 파이썬 - 병행성과 병렬성"
 date:   2018-03-05 00:10:59
-categories: Book
+categories: DevBook
 tags:	subprocess thread 파이썬 concurrent.futures 코루틴
 ---
 

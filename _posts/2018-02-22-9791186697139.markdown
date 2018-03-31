@@ -2,7 +2,7 @@
 layout: post
 title:  "자바 성능 튜닝 - 성능 테스트 접근법"
 date:   2018-02-21 00:01:59
-categories: Book
+categories: DevBook
 tags:	Java 성능 performance 테스트  
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title:  "이펙티브 SQL - 집계"
 date:   2018-03-26 00:01:59
-categories: Book
+categories: DevBook
 tags:	sql groupby count 
 ---
 
