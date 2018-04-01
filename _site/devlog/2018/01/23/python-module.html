@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ModuleNotFoundError: No module named 해결하기</title>
+  <meta name="description" content="issue">
+  
+  <meta name="author" content="JB">
+  <meta name="copyright" content="&copy; JB 2018">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://underlinee.github.io/devlog/2018/01/23/python-module.html">
+  <link rel="alternate" type="application/rss+xml" title="Underlinee" href="http://underlinee.github.io/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <!-- <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="Underlinee">
+      
+    </a> -->
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+        
+          
+          <li class="nav-link"><a href="/bookshelf/">Bookshelf</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <li class="nav-link"><a href="/posts/">Posts</a>
+          
+        
+          
+        
+          
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container " >
+  <div class="scrim ">
+    <header class="post-header">
+      <h1 class="title">ModuleNotFoundError: No module named 해결하기</h1>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+ <span class="page-divider">
+  <span class="one"></span>
+  <span class="two"></span>
+</span>
+ 
+
+<section class="post-meta">
+  <div class="post-date">January 23, 2018</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/DevLog">Devlog</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <h2 id="issue">issue</h2>
+
+<p>pycharm 으로 run 시에는 잘 동작하는 스크립트가 커맨드 라인으로 실행시 다음과 같은 에러와 함께 실행에 실패했다.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>Traceback (most recent call last):
+  File "/Users/MyName/PycharmProjects/myproject/src/myproject/myscript.py", line 8, in &lt;module&gt;
+    from myproject.package import script, script, script
+ModuleNotFoundError: No module named 'myproject'
+</code></pre>
+</div>
+<p><br /></p>
+<h2 id="syspath-">sys.path 설정하기</h2>
+
+<p>파이썬은 모듈을 읽어 들일 때 sys.path에 있는 모든 경로를 검색한다. 따라서 import에 문제가 있을 때는 sys.path부터 확인하자.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># import sys; print(sys.path)
+['/Users/MyName/PycharmProjects/myproject/src/myproject'...]
+</code></pre>
+</div>
+
+<p>동작하지 않던 스크립트에 다음 코드를 추가하자 커맨드 라인을 통해서도 스크립트가 잘 동작한다.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+</code></pre>
+</div>
+
+<p>필요한 모듈을 import하기 위해서는 sys.path가 src 로 설정되어야하나 myproject로 설정되어 import에 실패했던 것. pycharm에서는 run 시에 디폴트로 content root와 source root를 PYTHONPATH에 추가하기 때문에 정상적으로 동작했다.</p>
+
+<p><a href="//underlinee.github.io/assets/20180123-1.png" data-lightbox="falcon9-large">
+  <img src="//underlinee.github.io/assets/20180123-1.png" />
+</a></p>
+
+<p>sys.path 를 확인해보면 다음과 같다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># import sys; print(sys.path)
+['/Users/MyName/PycharmProjects/myproject/src/myproject', ...'/Users/MyName/PycharmProjects/myproject/src/myproject/..']
+</code></pre>
+</div>
+
+<p><br /></p>
+<h2 id="entry-point---">entry point를 프로젝트 루트로 변경하자</h2>
+
+<p>하지만 모든 실행파일에 PYTHONPATH를 지정할 수는 없다. main으로 실행되는 파일의 디렉터리는 자동으로 pythonpath에 저장되기 때문에 entry 포인트를 프로젝트의 루트에 두면 import 문제가 해결된다. 불가피하게 루트 아래에 있는 파일 외의 대해서 import가 필요하다면 아래와 같이 구성한다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># setup.py
+import sys
+
+def load():
+    paths = ['/path1/','/path2/','/path3/']
+    for p in path:
+        sys.path.insert(0, p)
+
+# entrypoint.py
+from setup import load
+load()
+</code></pre>
+</div>
+
+</article>
+
+
+
+<section class="tags">
+  <strong>Tags:</strong> <a href="/tag/python">python</a>,&nbsp;<a href="/tag/module">module</a>,&nbsp;<a href="/tag/import">import</a>,&nbsp;<a href="/tag/sys.path">sys.path</a>
+</section>
+
+
+
+
+
+
+
+
+<section class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'underlinee';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer" style="background-image: url(/assets/footer_image.jpg)";>
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">Underlinee</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+        
+        
+          <li class="nav-link"><a href="/bookshelf/">Bookshelf</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+          <li class="nav-link"><a href="/posts/">Posts</a>
+        
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:jb.squee@daum.net">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">jb.squee@daum.net</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+});
+
+</script>
+
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-112755509-1', 'auto');
+  ga('send', 'pageview', {
+    'page': '/devlog/2018/01/23/python-module.html',
+    'title': 'ModuleNotFoundError: No module named 해결하기'
+  });
+</script>
+
+
+
+  </body>
+
+</html>

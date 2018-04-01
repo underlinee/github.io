@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>이펙티브 파이썬 - 함수</title>
+  <meta name="description" content="None을 반환하기보다는 예외를 일으키자특별한 의미를 나타내려고 None을 반환하는 함수를 사용하지 말자. None은 조건식에서 False로 평가되기 때문에 의도하지 않은 버그를 만들어 낼 수 있다. 대신에 예외를 일으키는 편이 낫다.">
+  
+  <meta name="author" content="JB">
+  <meta name="copyright" content="&copy; JB 2018">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://underlinee.github.io/devbook/2018/03/03/9791186978825.html">
+  <link rel="alternate" type="application/rss+xml" title="Underlinee" href="http://underlinee.github.io/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <!-- <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="Underlinee">
+      
+    </a> -->
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+        
+          
+          <li class="nav-link"><a href="/bookshelf/">Bookshelf</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <li class="nav-link"><a href="/posts/">Posts</a>
+          
+        
+          
+        
+          
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container " >
+  <div class="scrim ">
+    <header class="post-header">
+      <h1 class="title">이펙티브 파이썬 - 함수</h1>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+ <span class="page-divider">
+  <span class="one"></span>
+  <span class="two"></span>
+</span>
+ 
+
+<section class="post-meta">
+  <div class="post-date">March 3, 2018</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/DevBook">Devbook</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <h2 id="none---">None을 반환하기보다는 예외를 일으키자</h2>
+<p>특별한 의미를 나타내려고 None을 반환하는 함수를 사용하지 말자. None은 조건식에서 False로 평가되기 때문에 의도하지 않은 버그를 만들어 낼 수 있다. 대신에 예외를 일으키는 편이 낫다.</p>
+
+<p><br /></p>
+
+<h2 id="section">클로저가 변수 스코프와 상호 작용하는 방법을 알자</h2>
+<p>파이썬은 클로저를 지원한다. 클로저는 자신이 정의된 스코프에 있는 변수를 참조하는 함수다. 변수 참조시에 파이썬 인터프리터는 현재 함수의 스코프 -&gt; 함수를 감싸고 있는 스코프 -&gt; 코드를 포함하는 모듈의 스코프 -&gt; 내장 스코프 순으로 변수를 탐색한다. 그래서 클로서 안쪽에서 변수를 할당하면 바깥쪽 스코프에 있는 변수에는 영향을 미치지 못 한다. 파이썬 3에서는 nonlocal 문법을 사용하여 클로저에서 데이터를 얻어올 수 있지만, 함수가 복잡해지는 경우에는 nonlocal로 인한 부작용이 생길 수 있으므로 상태를 감싸는 클래스를 정의하는 편이 낫다.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>def sort_priority(numbers, group):
+    found = False
+
+    def helper(x):
+        nonlocal found
+        if x in group:
+            found = True
+            return (0, x)
+        return (1, x)
+
+    numbers.sort(key=helper)
+    return found
+</code></pre>
+</div>
+
+<p><br /></p>
+
+<h2 id="section-1">리스트를 반환하는 대신 제너레이터를 고려하자</h2>
+<p>함수에서 결과값을 리스트로 반환하는 경우 메모리 사용이 많은 경우 문제를 일으킬 수 있고, 이해하기도 더 어렵다. 제너레이터는 함수 본문에 있는 yield 표현식에 전달된 값들의 집합이다.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>def index_words(text):
+    result = []
+    if text:
+        result.append(0)
+    for index, letter in enumerate(text):
+        if letter == ' ':
+            result.append(index + 1)
+    return result
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>def index_words(text):
+    if text:
+        yield 0
+    for index, letter in enumerate(text):
+        if letter == ' ':
+            yield index + 1
+</code></pre>
+</div>
+
+<p><br /></p>
+
+<h2 id="section-2">인수를 순회할 때는 방어적으로 하자</h2>
+<p>이터레이터는 한 번 순회하면 다시 인수에 접근할 수 없기 때문에, 입력 인수를 여러 번 순회해야 할 때 인수가 이터레이터인지 확인하여 TypeError를 일으켜야 한다. 순회해야 할 데이터는 이터레이터 프로토콜을 구현한 컨테이너 클래스를 정의하자. 파이썬은 for x in foo 같은 문장에서 실제로 foo.__iter__를 호출한다. __iter__ 메서드는 이터레이터 객체를 반환하고, for 루프에서는 이터레이터 객체의 __next__ 메서드를 계속 호출하므로  아래와 같이 정의해주자.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class ReadVisits(object):
+    def __init__(self, data_path):
+        self.data_path = data_path
+
+    def __iter__(self):
+        with open(self.data_path) as f:
+            for line in f:
+                yield int(line)
+</code></pre>
+</div>
+
+<p><br /></p>
+
+<h2 id="section-3">가변 위치 인수로 깔끔하게 보이게 하자</h2>
+<p>def 문에서 <em>args를 사용하면 함수에서 가변 개수의 위치 인수를  받을 수 있다. * 연산자를 쓰면 시퀀스에 들어 있는 아이템을 함수의 위치 인수로 사용할 수 있다. 주의할 점은 제너레이터와 * 연산자를 함께 사용하면 제너레이터를 소진할 때까지 튜플로 변환하기 때문에 메모리가 부족할 수 있다. 또 ‘</em>args’를 받는 함수에 새 위치 파라미터를 추가하면 정말 찾기 어려운 버그가 생길 수도 있다.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>def log(message, *values):
+    if not values:
+        print(values)
+    else:
+        values_str = ', '.join(str(x) for x in values)
+        print("{}: {}".format(message, values_str))
+
+
+log('My numbers ars', 1, 2)
+log('Hi there')
+</code></pre>
+</div>
+
+<p><br /></p>
+
+<h2 id="section-4">키워드 인수로 선택적인 동작을 제공하자</h2>
+<p>파이썬에서는 인수를 키워드로 전달 할 수 있다.  위치 인수만으로 이해하기 어려울 때 키워드 인수를 쓰면 각 인수를 사용하는 목적이 명확해진다. 또한 키워드 인수에 기본값을 지정하면 대부분은 기본값으로 동작하게 하고 필요할 때만 부가기능을 동작하게 할 수 있다. 그리고 기존 코드와 호환성을 유지하면서도 파라미터를 확장하기가 용이하다.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>def flow_rate(weight_diff, time_diff, period=1, units_per_kg=1):
+    return ((weight_diff / units_per_kg) / time_diff) * period
+</code></pre>
+</div>
+
+<p><br /></p>
+
+<h2 id="none-docstring-">동적 기본 인수를 지정하려면 None과 docstring을 사용하자</h2>
+<p>기본 인수는 함수 정의 과정에서 딱 한 번 평가된다. 그래서 기본 인수를 {}, [] 로 설정하는 경우 의도하지 않은 동작을 하기 쉽다. 때문에 기본 인수는 기본 값을 None으로 사용하고 docstring에 실제 기본 동작을 문서화하는 편이 좋다.</p>
+
+<p><br /></p>
+
+<h2 id="section-5">키워드 전용 인수로 명료성을 강요하자</h2>
+<p>파이썬에서는 키워드 전용 인수 문법을 제공한다. 키워드 전용 인수는 위치로는 인수를 넘기지 못하고, 키워드로만 넘길 수 있도록 요구한다. 인수가 헷갈리는 함수를 호출할 때, 호출하는 쪽에서 인수의 의도를 정확히 드러내도록 키워드 전용 인수를 사용하는 편이 좋다. * 기호는 인수의 끝과 키워드 전용 인수의 시작을 나타낸다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>def safe_division_c(number, divisor, *, ignore_overflow=False, ignore_zero_division=False):
+# ...
+</code></pre>
+</div>
+
+<p><br /></p>
+
+<p><a href="http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=80277523">
+  <img class="book" style="width: 30%; height: 30%" src="http://image.aladin.co.kr/product/8027/75/cover/k212434638_1.jpg" />
+</a></p>
+
+</article>
+
+
+
+<section class="tags">
+  <strong>Tags:</strong> <a href="/tag/키워드인수">키워드인수</a>,&nbsp;<a href="/tag/키워드전용인수">키워드전용인수</a>,&nbsp;<a href="/tag/클로저">클로저</a>,&nbsp;<a href="/tag/제너레이터">제너레이터</a>,&nbsp;<a href="/tag/기본인수">기본인수</a>,&nbsp;<a href="/tag/가변위치인수">가변위치인수</a>
+</section>
+
+
+
+
+
+
+
+
+<section class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'underlinee';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer" style="background-image: url(/assets/footer_image.jpg)";>
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">Underlinee</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+        
+        
+          <li class="nav-link"><a href="/bookshelf/">Bookshelf</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+          <li class="nav-link"><a href="/posts/">Posts</a>
+        
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:jb.squee@daum.net">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">jb.squee@daum.net</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+});
+
+</script>
+
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-112755509-1', 'auto');
+  ga('send', 'pageview', {
+    'page': '/devbook/2018/03/03/9791186978825.html',
+    'title': '이펙티브 파이썬 - 함수'
+  });
+</script>
+
+
+
+  </body>
+
+</html>
