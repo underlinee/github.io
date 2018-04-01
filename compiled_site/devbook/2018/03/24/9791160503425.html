@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>이펙티브 SQL - 인덱스 설계와 프로그램적 처리</title>
+  <meta name="description" content="인덱스를 만들 때는 널을 고려하자데이터베이스 시스템이 인덱스로 생성된 컬럼의 널 값을 어떻게 처리하는지 고려해야 한다. NULL을 검색하고 싶은데 컬럼 값의 대다수가 NULL 이면 이 컬럼은 인덱스로 만들지 않거나 테이블을 재설계하는 편이 낫다. 컬럼에 있는 값을 검색하고 싶은데 ...">
+  
+  <meta name="author" content="JB">
+  <meta name="copyright" content="&copy; JB 2018">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://underlinee.github.io/devbook/2018/03/24/9791160503425.html">
+  <link rel="alternate" type="application/rss+xml" title="Underlinee" href="http://underlinee.github.io/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <!-- <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="Underlinee">
+      
+    </a> -->
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+        
+          
+          <li class="nav-link"><a href="/bookshelf/">Bookshelf</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <li class="nav-link"><a href="/posts/">Posts</a>
+          
+        
+          
+        
+          
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container " >
+  <div class="scrim ">
+    <header class="post-header">
+      <h1 class="title">이펙티브 SQL - 인덱스 설계와 프로그램적 처리</h1>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+ <span class="page-divider">
+  <span class="one"></span>
+  <span class="two"></span>
+</span>
+ 
+
+<section class="post-meta">
+  <div class="post-date">March 24, 2018</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/DevBook">Devbook</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <h2 id="section">인덱스를 만들 때는 널을 고려하자</h2>
+<p>데이터베이스 시스템이 인덱스로 생성된 컬럼의 널 값을 어떻게 처리하는지 고려해야 한다. NULL을 검색하고 싶은데 컬럼 값의 대다수가 NULL 이면 이 컬럼은 인덱스로 만들지 않거나 테이블을 재설계하는 편이 낫다. 컬럼에 있는 값을 검색하고 싶은데 NULL 이 대부분이라면 NULL 값을 제외하고 인덱스를 만드는 것이 낫다. 인덱스에서 NULL에 대한 처리는 데이터베이스마다 다르다.</p>
+
+<p><br /></p>
+
+<h2 id="section-1">인덱스와 데이터 스캔을 최소화하도록 인덱스는 신중히 만들자</h2>
+<p>데이터를 찾는 프로세스는 인덱스 스캔, 인텍스 탐색, 테이블 스캔이 있다. 조회시 칼럼에 유니크 인덱스가 있는 경우 인덱스 탐색으로 정확히 데이터를 짚어내고, 일반 인덱스라면 인덱스 스캔, 인덱스가 없다면 테이블 스캔을 한다. 인덱스는 테이블에 비해 훨씬 작고 특별히 스캔용으로 설계된 객체이므로, 일반적으로 테이블 스캔보다 인덱스 스캔이 월등히 빠르다. 그러나 인덱스가 만능 해결사는 아니다.</p>
+<ul>
+  <li>인덱스 컬럼 하나를 갱신할 때마다 인덱스 테이블 하나 이상을 갱신해야 하기 때문에, 종종 테이블 갱신보다 비용이 많이 든다. 갱신 작업이 많은 테이블의 인덱스는 면밀히 검토해야 한다.</li>
+  <li>쿼리에 사용하는 컬럼이 여러개일때 해당 컬럼을 순서의 맞추어 생성해야 한다. 개별적으로 생성된 인덱스가 효율적인 쿼리 플랜을 보장하지 않는다.</li>
+  <li>인덱스는 테이블이 클 때만 사용하는 것이 좋다. 데이터베이스는 테이블이 작으면 데이터를 모두 메모리에 올려놓기 때문에 무슨 작업을 하든 빠르게 동작한다.</li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="section-2">인덱스를 단순 필러링 이상의 목적으로 사용하자</h2>
+<p>인덱스란 데이터베이스 내에 있는 독특한 데이터 구조체다. 생성된 각 인덱스에는 별도의 저장 공간이 필요하며, 인덱스화된 테이블 데이터의 복사본이 있어 과잉 데이터를 저장한다. 하지만 이런 과잉테이터가 있음에도 테이블의 모든 로우를 검색하지 않고 데이터 위치를 빠르게 찾아서 테이블에 있는 데이터를 가져오는 속도를 향상시키기 때문에 매우 유용하다. 데이터 조회 뿐만 아니라 다른 목적으로도 인덱스는 사용될 수 있다.</p>
+<ul>
+  <li>조인 조건에 사용된 컬럼의 인덱스도 조인 성능에 영향을 미칠 수 있다.</li>
+  <li>Where 절에서 필요한 컬럼에 모두 인덱스가 있다면 테이블 스캔할 필요가 없어 쿼리가 더 효율적이 된다.</li>
+  <li>인덱스는 미리 정렬하는 방식으로 데이터를 저장하기 때문에 Order By 절의 효율에도 영향을 준다.</li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="section-3">데이터의 부분 집합을 포함하거나 제외하려면 필터링된 인덱스를 사용하자</h2>
+<p>필터링된 인덱스는 적은 비율의 로우에 인덱스를 사용할 때 저장 용량을 절약할 수 있어 유용하다. 필터링된 인덱스는 인덱스를 만들 때 Where 절을 추가해서 생성한다. 테이블 전체의 데이터 중 차지하는 비율이 적고 Where 절에서 빈번히 사용되는 값이 있을 때 필터링된 인덱스를 사용하면 전통적인 인덱스에 비해 그 성능이 월등히 좋아진다.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>CREATE NONCLUSTERED INDEX PendingDocuments 
+ON DocumentStatus (DocumentNumber, Status)
+WHERE Status IN (‘publication’, ‘expiration’)
+</code></pre>
+</div>
+
+<p><br /></p>
+
+<h2 id="section-4">프로그래밍으로 검사하는 대신 선언적 제약 조건을 사용하자</h2>
+<p>SQL은 데이터 무결성을 강화하는 방법으로 NOT NULL, UNIQUE, PRIMARY KEY, FOREIGN KEY, CHECK, DEFAULT 제약 조건을 사용할 수 있다. 
+<br />
+데이터 베이스 무결성을 위해 프로그램 코드로 규칙을 작성할 수도 있다. 하지만, 비즈니스 규칙과 데이터 간 관계를 관리하고 강화하는 것은 데이터 모델의 일부분이어야 하며,그 역할은 데이터 베이스에서 수행해야 한다. 모든 사람이 같은 데이터로 작업하고, 이 데이터를 한 가지 방식으로 갱신되게 하려면 데이터 규칙이 애플리케이션에 독립적이어야 한다. 이렇게 해야 계속해서 코들 관리하는 부담을 덜 수 있다. 물론 그렇더라고 무결성이 훼손될 수 있지만, 최소한 가능성은 줄어든다.</p>
+
+<p><br /></p>
+
+<p><a href="http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=124421253">
+  <img class="book" style="width: 30%; height: 30%" src="http://image.aladin.co.kr/product/12442/12/cover/k802531656_1.jpg" />
+</a></p>
+
+</article>
+
+
+
+<section class="tags">
+  <strong>Tags:</strong> <a href="/tag/sql">sql</a>,&nbsp;<a href="/tag/index">index</a>
+</section>
+
+
+
+
+
+
+
+
+<section class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'underlinee';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer" style="background-image: url(/assets/footer_image.jpg)";>
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">Underlinee</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+        
+        
+          <li class="nav-link"><a href="/bookshelf/">Bookshelf</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+          <li class="nav-link"><a href="/posts/">Posts</a>
+        
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:jb.squee@daum.net">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">jb.squee@daum.net</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+});
+
+</script>
+
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-112755509-1', 'auto');
+  ga('send', 'pageview', {
+    'page': '/devbook/2018/03/24/9791160503425.html',
+    'title': '이펙티브 SQL - 인덱스 설계와 프로그램적 처리'
+  });
+</script>
+
+
+
+  </body>
+
+</html>

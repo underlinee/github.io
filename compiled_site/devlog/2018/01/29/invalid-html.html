@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>크롤링 해 온 html에 원하는 값이 없다면</title>
+  <meta name="description" content="issue웹 사이트에서 잘 표시되는 컨텐츠를 크롤링 해왔을 때 파싱한 html에서 원하는 값을 찾을 수 없는 경우가 있다. 이런 상황에서 의심해 볼 수 있는 케이스를 정리했다.">
+  
+  <meta name="author" content="JB">
+  <meta name="copyright" content="&copy; JB 2018">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://underlinee.github.io/devlog/2018/01/29/invalid-html.html">
+  <link rel="alternate" type="application/rss+xml" title="Underlinee" href="http://underlinee.github.io/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <!-- <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="Underlinee">
+      
+    </a> -->
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+        
+          
+          <li class="nav-link"><a href="/bookshelf/">Bookshelf</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <li class="nav-link"><a href="/posts/">Posts</a>
+          
+        
+          
+        
+          
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container " >
+  <div class="scrim ">
+    <header class="post-header">
+      <h1 class="title">크롤링 해 온 html에 원하는 값이 없다면</h1>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+ <span class="page-divider">
+  <span class="one"></span>
+  <span class="two"></span>
+</span>
+ 
+
+<section class="post-meta">
+  <div class="post-date">January 29, 2018</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/DevLog">Devlog</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <h2 id="issue">issue</h2>
+<p>웹 사이트에서 잘 표시되는 컨텐츠를 크롤링 해왔을 때 파싱한 html에서 원하는 값을 찾을 수 없는 경우가 있다. 이런 상황에서 의심해 볼 수 있는 케이스를 정리했다.</p>
+
+<p><br /></p>
+
+<h3 id="ajax-----">Ajax 를 통해 컨텐츠를 가져오는 경우</h3>
+<p>페이지에 특정 컨텐츠를 Ajax 를 통해 화면에 뿌려주는 경우 브라우저에서 접근하는 경로로는 해당 컨텐츠를 이용할 수 없다. 이런 경우의 첫번째 해결법은 <a href="http://selenium-python.readthedocs.io/">Selenium</a>을 사용해 브라우저로 해당 컨텐츠에 접근하는 방법이 있다. 편한 방법이지만 브라우저를 사용할 수 있는 환경에서만 가능한 방법이고 크롤링할때마다 브라우저가 켜지는 등 불편한 점이 많다. 두번째 방법은 직접 Ajax로 요청하는 Request를 찾아내서 다시 해당 url로 접근하는 방법이다. 해당 웹 사이트에서 막아 놓았을 가능성도 있지만 그렇지 않다면 Selenium을 사용하는 방법보다 깔끔하고 활용도가 높다. Ajax 콜을 확인하는 방법은 Chrome의 개발자 도구를 통해 네트워크 요청이 어떤 것이 있는지 확인한 후 하나하나 확인하는 방법이 그나마 가장 쉬운 방법인 것 같다. 타입이 xhr인 요청을 잘 살펴보자. 그리고 원하는 요청을 찾았다고 하더라도 request 헤더를 조작해야 요청이 가능한 경우도 있다.</p>
+
+<p><a href="//underlinee.github.io/assets/20180129-1.png" data-lightbox="falcon9-large">
+  <img src="//underlinee.github.io/assets/20180129-1.png" />
+</a></p>
+
+<p><br /></p>
+
+<h3 id="html---">html이 유효하지 않은 경우</h3>
+<p>브라우저는 생각보다 똑똑하다. 사용자가 많은 메이저한 웹 사이트라도 html이 깨지는 경우가 꽤 있고, 브라우저는 잘못된 html을 눈치채지 못하게 수정해서 올바른 형태로 보여준다. 이런 html을 파싱해서 컨텐츠를 가져오려고 하는 경우 파싱에 실패하면서 특정 데이터만 확인 못할 수 있다. 아래는 &lt;/div&gt; 가 잘못 닫혀진 경우로 이런 경우 BeautifulSoup 의 html.parser를 통해 파싱하려고 하는 경우 값이 누락된다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;div class="texts"&gt;
+        &lt;table border="0" cellpadding="0" cellspacing="0" width="100%"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td valign="top"&gt;
+&lt;div&gt;���簡 ������ �� �����ϴ�. ���� �������� �����ؾ� �ϴ� �ΰ��� ���԰� ���Կ� ���� ��� �����̴�. ���ӵ� �� ����� ������ �ߴ� ���� ��ﳭ��. �⸧������ �԰������ ���� ��¿ �� ���� ��û�� �� ���ε� �װ� �׸� ���� �˳İ�, �ᱹ ���ڵ��� ����ȸ�縦 ���ؼ� �ϴ� ûŹ���� �ƴϳĸ鼭 ������ �� �� �ִ� ����� ���� ����İ� ����� ���ߴ�. ������ ����� �����ڸ� �״� ��κ��� ����鿡 ���� �����ߴ�. ���̿��� ���� ��¡�� �Ķ����� �Ͼ���� �����ϴ� �������� �� �ڵ����� �� �뾿�̳� ������ �־���, ���� �޵� �� �ٴ� ���� ����Ʈ���� ��� �־���.
+&lt;br/&gt;�ݸ� �� ������ �̿��ߴ� ������� ��¥ ���ε��̾���. �׵��� ������ �� ��� ���� ��ŷ ���̷� �극��ũ ������ ���� ���� �ִ�. �׷��� ���ӵ��ο��� �극��ũ�� ��Ҵµ� ����� �� ���⸸ �ϰ� ������ ���� �ʾ� ������ ���ָ� �ϴ� ��ü�� �Լ�ó�� ������ �������� �ƺ��� ����, �������� ������ �Ƴ��� �ٽô� �����鿡�� ���ư��� ������ ���� �ִ�. ������ �� ������ �׷� �� ���� �ƹ����� ������� ����̾���. ���� ��ȸ�� �������� �и��� �ڽ��� ���ӵǴ� ���� ���ո��ϰ� �Ұ����� ���̾���. �ڰ� ġ�� �ɷ��� ���� �� ���� �����̿� ������ �ִ� �÷��õ� �������̿�����, �ΰ��� ������ �ϴ� �ּ����� ������ å�Ӱ��� ������ ������� �׾߸��� ������ �������̿���.
+&lt;br/&gt;_ ����¼�� �����, ������ �ɷ��� ���� �׵项 �߿���&lt;/div&gt;
+&lt;/td&gt;
+&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+</code></pre>
+</div>
+
+<p>이런 케이스라면 parsing library를 다른 것으로 바꿔보자. 엄격하지 않은 라이브러리로 교체하는 경우 문제가 있는 html이라도 가져올 수 있다. 
+python Beutiful Soup을 사용한다면 html5lib가 엄격하지 않는 듯 하니 아래와 같이 적용해서 다시 시도해보자.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>soup = BeautifulSoup(response.data, 'html5lib')
+</code></pre>
+</div>
+
+</article>
+
+
+
+<section class="tags">
+  <strong>Tags:</strong> <a href="/tag/BeautifulSoup">BeautifulSoup</a>,&nbsp;<a href="/tag/crawler">crawler</a>,&nbsp;<a href="/tag/bug">bug</a>,&nbsp;<a href="/tag/crawling">crawling</a>
+</section>
+
+
+
+
+
+
+
+
+<section class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'underlinee';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer" style="background-image: url(/assets/footer_image.jpg)";>
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">Underlinee</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+        
+        
+          <li class="nav-link"><a href="/bookshelf/">Bookshelf</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+          <li class="nav-link"><a href="/posts/">Posts</a>
+        
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:jb.squee@daum.net">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">jb.squee@daum.net</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+});
+
+</script>
+
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-112755509-1', 'auto');
+  ga('send', 'pageview', {
+    'page': '/devlog/2018/01/29/invalid-html.html',
+    'title': '크롤링 해 온 html에 원하는 값이 없다면'
+  });
+</script>
+
+
+
+  </body>
+
+</html>

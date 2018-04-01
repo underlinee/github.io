@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>이펙티브 파이썬 - 제품화</title>
+  <meta name="description" content="배포 환경을 구성하는 데는 모듈 스코프 코드를 고려하자종종 프로그램을 여러 배포 환경에서 실행해야 하며, 각 환경마다 고유한 전제와 설정이 있다. 모듈 스코프에서 일반 파이썬 문장을 사용하여 모듈 콘텐츠를 다른 배포 환경에 맞출 수 있다. 모듈 컨텐츠는 sys와 os 모듈을 이용한...">
+  
+  <meta name="author" content="JB">
+  <meta name="copyright" content="&copy; JB 2018">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://underlinee.github.io/devbook/2018/03/08/9791186978825.html">
+  <link rel="alternate" type="application/rss+xml" title="Underlinee" href="http://underlinee.github.io/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <!-- <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="Underlinee">
+      
+    </a> -->
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+        
+          
+          <li class="nav-link"><a href="/bookshelf/">Bookshelf</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <li class="nav-link"><a href="/posts/">Posts</a>
+          
+        
+          
+        
+          
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container " >
+  <div class="scrim ">
+    <header class="post-header">
+      <h1 class="title">이펙티브 파이썬 - 제품화</h1>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+ <span class="page-divider">
+  <span class="one"></span>
+  <span class="two"></span>
+</span>
+ 
+
+<section class="post-meta">
+  <div class="post-date">March 8, 2018</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/DevBook">Devbook</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <h2 id="section">배포 환경을 구성하는 데는 모듈 스코프 코드를 고려하자</h2>
+<p>종종 프로그램을 여러 배포 환경에서 실행해야 하며, 각 환경마다 고유한 전제와 설정이 있다. 모듈 스코프에서 일반 파이썬 문장을 사용하여 모듈 콘텐츠를 다른 배포 환경에 맞출 수 있다. 모듈 컨텐츠는 sys와 os 모듈을 이용한 호스트 조사 내역 같은 외부 조건의 결과물이 될 수 있다.</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>import sys
+
+class Win32Database(object):
+    ...
+
+class PosixDatabase(object):
+    ...
+
+if sys.platform.startswith('win32'):
+    Database = Win32Database
+else:
+    Database = PosixDatabase
+
+</code></pre>
+</div>
+
+<p><br /></p>
+
+<h2 id="repr--">디버깅 출력용으로는 repr 문자열을 사용하자</h2>
+<p>파이썬 내장 타입에 print를 호출하면 타입 정보는 사람이 이해하기 쉬운 숨은 문자열 버전의 값이 나온다. 이 경우 타입을 구분하지 않기 때문에 정확하게 알기 어렵다. repr을 호출하면 객체를 명확하게 이해할 수 있는 문자열로 값이 표현된다. 포맷 문자열에서 %s는  사람이 이해하기 쉬운 문자열을 만들어나며, %r은 repr처럼 문자열을 출력한다. 객체의 내부를 보고 싶다면 __dict__ 속성에 접근하자</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>print(5)
+print('5')
+
+&gt;&gt;&gt;
+5
+5
+
+print(repr(5))
+print(repr('5'))
+&gt;&gt;&gt;
+5
+'5'
+</code></pre>
+</div>
+
+<p><br /></p>
+
+<h2 id="pdb----">pdb를 이용한 대화식 디버깅을 고려하자</h2>
+<p>print나 unittest도 디버깅하는데 유용하지만 더 강력한 디버깅 툴을 원한다면 파이썬에 내장된 대화식 디버거를 사용할 수 있다. Import pdb; pdb.set_trace() 문으로 프로그램 관심 지점에서 직접 파이썬 대화식 디버거를 시작할 수 있다. 파이썬 디버거 프롬프트는 실행 중인 프로그램의 상태를 조사하거나 수정할 수 있도록 해준다. 
+아래 명령어로 프로그램 상태를 조사할 수 있다.</p>
+<ul>
+  <li>bt: 현재 실행 호출 스택의 추적 정보를 출력한다.</li>
+  <li>up: 현재 함수의 호출자 쪽으로 함수 호출 스택의 스코프를 이동한다.</li>
+  <li>down: 현재 함수의 호출 스택을 한 단계 낮춘다.</li>
+</ul>
+
+<p>아래 명령어로 프로그램 실행을 세밀하게 제어할 수 있다.</p>
+<ul>
+  <li>step: 프로그램의 다음 줄까지 실행한 다음 제어를 디버거에 돌려준다. 함수 호출을 포함하면 호출된 함수에서 멈춘다.</li>
+  <li>next: 프로그램의 다음 줄까지 실행한 다음 제어를 디버거에 돌려준다. 함수 호출을 포함하면 호출된 함수를 실행한 후 멈춘다.</li>
+  <li>return: 현재 함수가 값을 반환할 때까지 프로그램 실행 후 제어를 디버거에 돌려준다.</li>
+  <li>continue: 다음 중단점까지 프로그램 실행을 계속한다.</li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="section-1">최적화 전에 프로파일하자</h2>
+<p>파이썬은 프로그램의 어느 부분이 실행 시간을 소비하는지 파악할 수 있도록 내장 프로파일러를 제공한다. 이때 순수 파이썬 보다 C 확장모듈인 cProfile이 프로그램 성능에 미치는 영향을 최소화 할 수 있어서 좋다. cProfile 모듈의 Profile 객체를 생성하고 runcall 메서드로 테스트 함수를 실행한 후. 내장 모듈 pstats와 Stats 클래스로 함수의 성능 통계를 뽑을 수 있다.</p>
+
+<p>프로파일러 통계 칼럼의 의미는 다음과 같다.</p>
+<ul>
+  <li>ncalls : 프로파일링 주기 동안 함수 호출 횟수</li>
+  <li>tottime: 함수가 실행되는 동안 소비한 초 단우 시간으로 다른 함수 호출을 실행하는데 걸린 시간은 제외한다.</li>
+  <li>tottime percall: 함수를 호출하는 데 걸린 평균 시간이며 초 단위다.  tottime을 ncalls로 나눈 값이다.</li>
+  <li>cumtime: 함수를 실행하는 데 걸린 초 단위 누적 시간. 다른 함수 실행 시간 포함</li>
+  <li>cumtime percall: 함수를 호출하는 데 걸린 평균 시간이며 초 단위다. cumtime을 ncalls로 나눈 값이다.</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>profiler = Profile()
+profiler.runcall(test)
+
+stats = Stats(profiler)
+stats.strip_dirs()
+stats.sort_stats('cumulative')
+stats.print_stats()
+</code></pre>
+</div>
+
+<p><br /></p>
+
+<h2 id="tracemalloc-----">tracemalloc으로 메모리 사용 현황과 누수를 파악하자</h2>
+<p>파이썬은 gc는 참조 카운팅으로 관리된다. 참조 카운팅은 객체의 참조가 모두 해제된다. 참조된 객체도 정리됨을 보장한다. 메모리 사용을 디버깅하는 방법은 내장 모듈 tracemalloc으로 어떤 객체들이 프로그램 메모리 사용량을 주로 차지하고 어느 부분에서 할당되는지를 알 수 있다. tracemalloc은 파이썬 3.4 이후부터 지원한다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>
+import tracemalloc
+
+tracemalloc.start(10)
+
+time1 = tracemalloc.take_snapshot()
+import waste_memory
+x = waste_memory.run()
+time2 = tracemalloc.take_snapshot()
+
+stats = time2.compare_to(time1, 'lineno')
+for stat in stats[:3]:
+    print(stats)
+
+
+</code></pre>
+</div>
+
+<p><br /></p>
+
+<p><a href="http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=80277523">
+  <img class="book" style="width: 30%; height: 30%" src="http://image.aladin.co.kr/product/8027/75/cover/k212434638_1.jpg" />
+</a></p>
+
+</article>
+
+
+
+<section class="tags">
+  <strong>Tags:</strong> <a href="/tag/tracemalloc">tracemalloc</a>,&nbsp;<a href="/tag/repr">repr</a>,&nbsp;<a href="/tag/pdb">pdb</a>,&nbsp;<a href="/tag/cProfile">cProfile</a>
+</section>
+
+
+
+
+
+
+
+
+<section class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'underlinee';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer" style="background-image: url(/assets/footer_image.jpg)";>
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">Underlinee</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+        
+        
+          <li class="nav-link"><a href="/bookshelf/">Bookshelf</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+          <li class="nav-link"><a href="/posts/">Posts</a>
+        
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:jb.squee@daum.net">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">jb.squee@daum.net</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+});
+
+</script>
+
+
+
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-112755509-1', 'auto');
+  ga('send', 'pageview', {
+    'page': '/devbook/2018/03/08/9791186978825.html',
+    'title': '이펙티브 파이썬 - 제품화'
+  });
+</script>
+
+
+
+  </body>
+
+</html>
