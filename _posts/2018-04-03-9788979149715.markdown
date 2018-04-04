@@ -1,0 +1,22 @@
+---
+layout: post
+title:  "리팩토링 - 메서드 정리"
+date:   2018-04-03 16:43:59
+categories: DevBook
+tags:	refactoring 
+---
+
+리팩토링의 주된 작업은 코드를 포장하는 메서드를 적절히 정리하는 것이다. 거의 모든 문제점은 장황한 메서드로 인해 생긴다. 핵심적인 리팩토링 기법은 코드 뭉치를 별도의 메서드로 빼내는 **Extract Method**다. 그와 반대로 **Inline Method**는 메서드를 잘못 쪼갯을 때 호출되는 메서드의 내용을 호출하는 메서드에 직접 넣는 기법이다. 
+
+메서드 추출에서 가장 힘든 작업은 지역 변수를 처리하는 것인데, 그건 주로 임시 변수 때문이다. **Replace Temp with Query** 를 실시해서 없어도 되는 임시 변수를 전부 제거한다. 임시변수가 여러 부분에 사용될 때는 **Split Temporary Variable**을 먼저 실시하면 더 간편하게 임시변수를 제거할 수 있다. 
+
+**Introduce Explaining Variable** 기법은 직관적인 이름의 임시변수를 사용해 조건의 의미를 설명하려 할 때 많이 사용한다. 하지만 임시변수를 많이 사용하면 코드를 보는 사람이 이해하기 힘들어질 수 있다. Introduce Explaining Variable를 사용하는 대신 Extract Method 를 사용하려고 노력하자. 임시변수는 하나의 메서드 안에서만 사용할 수 있지만, 메서드는 해당 객체의 전역 뿐 아니라 다른 객체에서도 사용할 수 있다. 
+
+임시변수가 너무 얽혀 있어서 메서드 호출로 전환할 수 없는 경우에는 **Replace method with Method Object**를 실시하자 그러면 새 클래스를 만들어서 심각하게 얽혀 있는 메서드를 분리할 수 있다. 지역 변수가 전부 필드로 바뀌므로 매개변수를 전달할 필요 없이 메서드를 마음껏 쪼갤 수 있다. 
+
+<br/>
+
+<a href="http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=20793053">
+  <img class="book" style="width: 30%; height: 30%" src="http://image.aladin.co.kr/product/2079/30/cover/8979149719_1.jpg"/>
+</a>
+

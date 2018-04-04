@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "리팩토링 - 개론"
-date:   2018-04-01 16:43:59
+date:   2018-03-31 16:43:59
 categories: DevBook
 tags:	refactoring 
 img: "http://image.aladin.co.kr/product/2079/30/cover/8979149719_1.jpg"
