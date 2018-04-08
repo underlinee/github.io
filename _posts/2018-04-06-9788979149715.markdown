@@ -3,7 +3,7 @@ layout: post
 title:  "리팩토링 - 조건문 간결화"
 date:   2018-04-06 00:00:01
 categories: DevBook
-tags:	refactoring 
+tags:	리팩토링 refactoring 
 ---
 
 프로그램에서 가장 복잡한 부분은 주로 복잡한 조건문이다. 조건 검사와 그에 따른 액션 코드를 보고 원리는 알 수 있지만 왜 그렇게 되지는 알기 힘들다. 이런 경우 **Decompose Conditional** 기법을 사용하여 if, then, else 부분을 각각 메서드로 빼내자. 

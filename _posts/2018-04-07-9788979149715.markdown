@@ -3,7 +3,7 @@ layout: post
 title:  "리팩토링 - 메서드 호출 간결화"
 date:   2018-04-07 00:00:01
 categories: DevBook
-tags:	refactoring 
+tags:	리팩토링 refactoring 
 ---
 
 객체에서 가장 중요한 것은 인터페이스다. 이해와 사용이 쉬운 인터페이스를 작성하는 기술이야 말로 좋은 객체지향 소프트웨어 개발에 꼭 필요하다. 객체에서 여러 값을 전달할 **Preserve Whole Object**를 실시하여 그 모든 값을 넘기는 대신에 하나의 객체만 넘기도록 하자. 그 하나의 객체가 존재하지 않을 때는 **Introduce Parameter Object**를 실시해서 그 객체를 만들면 된다.

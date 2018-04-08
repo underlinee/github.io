@@ -3,7 +3,7 @@ layout: post
 title:  "자바 성능 튜닝 - 가비지 컬렉션 입문"
 date:   2018-02-24 00:10:59
 categories: DevBook
-tags:	Java 성능 가비지 GC 
+tags:	자바성능튜닝 Java 가비지 GC 
 ---
 
 

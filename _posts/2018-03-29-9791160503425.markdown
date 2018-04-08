@@ -3,7 +3,7 @@ layout: post
 title:  "이펙티브 SQL - 서브 쿼리"
 date:   2018-03-27 00:11:59
 categories: DevBook
-tags:	sql subquery join  
+tags:	이펙티브SQL sql subquery join  
 ---
 
 ## 서브쿼리를 어디에 활용할 수 있는지 알아 두자
