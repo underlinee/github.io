@@ -3,7 +3,7 @@ layout: post
 title:  "크롤링 해 온 html에 원하는 값이 없다면"
 date:   2018-01-28 20:43:59
 categories: DevLog
-tags:	BeautifulSoup crawler bug crawling
+tags:	BeautifulSoup crawling
 ---
 
 ## issue

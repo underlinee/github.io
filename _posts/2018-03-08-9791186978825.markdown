@@ -3,7 +3,7 @@ layout: post
 title:  "이펙티브 파이썬 - 제품화"
 date:   2018-03-08 00:10:59
 categories: DevBook
-tags:	tracemalloc repr pdb cProfile
+tags:	이펙티브파이썬 tracemalloc repr pdb cProfile
 ---
 
 ## 배포 환경을 구성하는 데는 모듈 스코프 코드를 고려하자
