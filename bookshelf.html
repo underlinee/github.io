@@ -10,8 +10,13 @@ redirect_from:
   {% capture cat %}{{ category | first }}{% endcapture %}
   {% for post in site.categories[cat] %}
     {% if post.shelf == true %}
+<<<<<<< Updated upstream
       <li class="card">
         <a href="{{ post.url | prepend: site.baseurl }}" src="{{ post.img }}">
+=======
+      <li class="book-card">
+        <a href="tags.html#{{ post.tags[0]}}" src="{{ post.img }}">
+>>>>>>> Stashed changes
           <img src="{{ post.img }}" style="width:100%">
         </a>
       </li>
