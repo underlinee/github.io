@@ -1,0 +1,117 @@
+---
+layout: post
+title:  "이펙티브 파이썬 - 함수"
+date:   2018-03-03 00:10:59
+categories: DevBook
+tags:	키워드인수 키워드전용인수 클로저 제너레이터 기본인수 가변위치인수
+---
+
+## None을 반환하기보다는 예외를 일으키자
+특별한 의미를 나타내려고 None을 반환하는 함수를 사용하지 말자. None은 조건식에서 False로 평가되기 때문에 의도하지 않은 버그를 만들어 낼 수 있다. 대신에 예외를 일으키는 편이 낫다. 
+
+<br/>
+
+## 클로저가 변수 스코프와 상호 작용하는 방법을 알자
+파이썬은 클로저를 지원한다. 클로저는 자신이 정의된 스코프에 있는 변수를 참조하는 함수다. 변수 참조시에 파이썬 인터프리터는 현재 함수의 스코프 -> 함수를 감싸고 있는 스코프 -> 코드를 포함하는 모듈의 스코프 -> 내장 스코프 순으로 변수를 탐색한다. 그래서 클로서 안쪽에서 변수를 할당하면 바깥쪽 스코프에 있는 변수에는 영향을 미치지 못 한다. 파이썬 3에서는 nonlocal 문법을 사용하여 클로저에서 데이터를 얻어올 수 있지만, 함수가 복잡해지는 경우에는 nonlocal로 인한 부작용이 생길 수 있으므로 상태를 감싸는 클래스를 정의하는 편이 낫다. 
+```
+def sort_priority(numbers, group):
+    found = False
+
+    def helper(x):
+        nonlocal found
+        if x in group:
+            found = True
+            return (0, x)
+        return (1, x)
+
+    numbers.sort(key=helper)
+    return found
+```
+
+<br/>
+
+## 리스트를 반환하는 대신 제너레이터를 고려하자
+함수에서 결과값을 리스트로 반환하는 경우 메모리 사용이 많은 경우 문제를 일으킬 수 있고, 이해하기도 더 어렵다. 제너레이터는 함수 본문에 있는 yield 표현식에 전달된 값들의 집합이다.
+```
+def index_words(text):
+    result = []
+    if text:
+        result.append(0)
+    for index, letter in enumerate(text):
+        if letter == ' ':
+            result.append(index + 1)
+    return result
+```
+
+```
+def index_words(text):
+    if text:
+        yield 0
+    for index, letter in enumerate(text):
+        if letter == ' ':
+            yield index + 1
+```
+
+<br/>
+
+## 인수를 순회할 때는 방어적으로 하자 
+이터레이터는 한 번 순회하면 다시 인수에 접근할 수 없기 때문에, 입력 인수를 여러 번 순회해야 할 때 인수가 이터레이터인지 확인하여 TypeError를 일으켜야 한다. 순회해야 할 데이터는 이터레이터 프로토콜을 구현한 컨테이너 클래스를 정의하자. 파이썬은 for x in foo 같은 문장에서 실제로 foo.\_\_iter\_\_를 호출한다. \_\_iter\_\_ 메서드는 이터레이터 객체를 반환하고, for 루프에서는 이터레이터 객체의 \_\_next\_\_ 메서드를 계속 호출하므로  아래와 같이 정의해주자.
+
+```
+class ReadVisits(object):
+    def __init__(self, data_path):
+        self.data_path = data_path
+
+    def __iter__(self):
+        with open(self.data_path) as f:
+            for line in f:
+                yield int(line)
+```
+
+<br/>
+
+## 가변 위치 인수로 깔끔하게 보이게 하자
+def 문에서 *args를 사용하면 함수에서 가변 개수의 위치 인수를  받을 수 있다. * 연산자를 쓰면 시퀀스에 들어 있는 아이템을 함수의 위치 인수로 사용할 수 있다. 주의할 점은 제너레이터와 * 연산자를 함께 사용하면 제너레이터를 소진할 때까지 튜플로 변환하기 때문에 메모리가 부족할 수 있다. 또 '*args'를 받는 함수에 새 위치 파라미터를 추가하면 정말 찾기 어려운 버그가 생길 수도 있다.  
+```
+def log(message, *values):
+    if not values:
+        print(values)
+    else:
+        values_str = ', '.join(str(x) for x in values)
+        print("{}: {}".format(message, values_str))
+
+
+log('My numbers ars', 1, 2)
+log('Hi there')
+```
+
+<br/>
+
+## 키워드 인수로 선택적인 동작을 제공하자
+파이썬에서는 인수를 키워드로 전달 할 수 있다.  위치 인수만으로 이해하기 어려울 때 키워드 인수를 쓰면 각 인수를 사용하는 목적이 명확해진다. 또한 키워드 인수에 기본값을 지정하면 대부분은 기본값으로 동작하게 하고 필요할 때만 부가기능을 동작하게 할 수 있다. 그리고 기존 코드와 호환성을 유지하면서도 파라미터를 확장하기가 용이하다. 
+```
+def flow_rate(weight_diff, time_diff, period=1, units_per_kg=1):
+    return ((weight_diff / units_per_kg) / time_diff) * period
+```
+
+<br/>
+
+## 동적 기본 인수를 지정하려면 None과 docstring을 사용하자
+기본 인수는 함수 정의 과정에서 딱 한 번 평가된다. 그래서 기본 인수를 {}, [] 로 설정하는 경우 의도하지 않은 동작을 하기 쉽다. 때문에 기본 인수는 기본 값을 None으로 사용하고 docstring에 실제 기본 동작을 문서화하는 편이 좋다. 
+
+<br/>
+
+## 키워드 전용 인수로 명료성을 강요하자
+파이썬에서는 키워드 전용 인수 문법을 제공한다. 키워드 전용 인수는 위치로는 인수를 넘기지 못하고, 키워드로만 넘길 수 있도록 요구한다. 인수가 헷갈리는 함수를 호출할 때, 호출하는 쪽에서 인수의 의도를 정확히 드러내도록 키워드 전용 인수를 사용하는 편이 좋다. * 기호는 인수의 끝과 키워드 전용 인수의 시작을 나타낸다. 
+
+```
+def safe_division_c(number, divisor, *, ignore_overflow=False, ignore_zero_division=False):
+# ...
+```
+
+<br/>
+
+
+<a href="http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=80277523">
+  <img class="book" style="width: 30%; height: 30%" src="http://image.aladin.co.kr/product/8027/75/cover/k212434638_1.jpg"/>
+</a>

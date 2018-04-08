@@ -1,0 +1,21 @@
+---
+layout: post
+title:  "리팩토링 - 메서드 호출 간결화"
+date:   2018-04-07 00:00:01
+categories: DevBook
+tags:	refactoring 
+---
+
+객체에서 가장 중요한 것은 인터페이스다. 이해와 사용이 쉬운 인터페이스를 작성하는 기술이야 말로 좋은 객체지향 소프트웨어 개발에 꼭 필요하다. 객체에서 여러 값을 전달할 **Preserve Whole Object**를 실시하여 그 모든 값을 넘기는 대신에 하나의 객체만 넘기도록 하자. 그 하나의 객체가 존재하지 않을 때는 **Introduce Parameter Object**를 실시해서 그 객체를 만들면 된다.
+
+객체가 A 메서드를 호출해서 그 결과를 B 메서드에 매개변수로 전달하는데 결과를 매개변수로 받는 B 메서드도 직접 호출할 수 있다면 **Replace Parameter with Method**를 이용해서 A 메서드를 B 메서드가 호출하게 하자. 매개 변수로 전달된 값에 따라 다른 코드가 실행되는 경우 **Replace Parameter with Explicit Methods**를 실시하고, 여러 메서드의 기능이 비슷하고 안에 든 값만 다르다면 **Parameterize Method**를 이용하자. 
+
+상태 변경 기능과 상태 질의 기능을 하나의 메서드 안에 넣으면 문제가 발생하는 상황이 많이 생긴다. 그래서 두 기능이 합쳐져 있다면 바로 **Separate Query from Modifier**를 실시하자. 
+
+Exception은 예외적인 상황에만 적절하게 사용해야 한다. 예외적인 상황을 에러부호를 반환하여 확인하고 있다면 **Replace Error Code with Exception**을 실시하고, 간혹 예외처리가 정답이 아닐때가 있는데 이럴 때는 **Replace Exception with Test**를 실시해서 우선 테스트부터 실시해야 한다. 
+
+<br/>
+
+<a href="http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=20793053">
+  <img class="book" style="width: 30%; height: 30%" src="http://image.aladin.co.kr/product/2079/30/cover/8979149719_1.jpg"/>
+</a>

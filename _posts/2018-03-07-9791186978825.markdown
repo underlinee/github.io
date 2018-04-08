@@ -1,0 +1,72 @@
+---
+layout: post
+title:  "이펙티브 파이썬 - 협력"
+date:   2018-03-07 00:10:59
+categories: DevBook
+tags:	docstring package pyvenv exception
+---
+
+## 모든 함수, 클래스, 모듈에 docstring을 작성하자
+파이썬 문서화는 언어의 동적 특성 때문에 극히 중요하다. 파이썬은 코드 블록에 문서를 첨부하는 기능을 기본으로 지원한다. 대부분 다른 언어와는 다르게 프로그램 실행 중에 소스 코드에 첨부한 문서에 직접 접근할 수 있다. 모든 모듈, 클래스, 함수를 docstring 으로 문서화하자. 
+- 모듈: 모듈의 내용과 모든 사용자가 알아둬야 할 중요한 클래스와 함수를 설명한다.
+- 클래스: class문 다음의 docstring에서 클래스의 동작, 중요한 속성, 서브클래스의 동작을 설명한다. 
+- 함수와 메서드: def문 다음의 docstring에서 모든 인수, 반환 값, 일어나는 에외, 다른 동작들을 문서화한다.
+
+```
+def palindrome(word):
+    """Return True if the given word is a palindrome"""
+    return word == word[::-1]
+
+print(repr(palindrome.__doc__))
+```
+<br/>
+
+
+## 모듈을 구성하고 안정적인 API를 제공하려면 패키지를 사용하자
+디렉터리 안에 __init__.py 라는 빈 파일을 넣는 방법으로 패키지를 정의한다. __init__.py가 있으면 해당 디렉터리에 있는 다른 파이썬 파일은 디렉터리에 상대적인 경로로 임포트할 수 있다. 패키지를 이용하면 네임스페이스를 분리하고 명시적인 API를 제공해야 할 때 유용하다. 모듈이나 패키지에 __all__ 이라는 특별한 속성으로 API 사용자에게 드러나는 외부 영역을 제한할 수 있다. from foo import * 를 실행하면 foo.__all__ 에 있는 속성만 임포트된다. 
+```
+# utils.py
+
+__all__ = ['simulate_collision']
+
+def _dot_product(a, b):
+    ...
+
+def simulate_collision(a, b):
+    ...
+
+# init.py
+
+__all__ = []
+
+from . utils import *
+__all__ += utils.__all__
+```
+<br/>
+
+## 루트 Exception을 정의해서 API로부터 호출자를 보호하자
+API 사용자는 API에서 의도적으로 일으킨 다양한 예외를 잡아낼 수 있어야 한다. 루트 예외 정의하면 이런 예외들을 잡아서 적절히 처리하는 코드를 추가하기 쉽다. 루트 예외 이외에 잡히는 파이썬 Exception 들은 모두 의도하지 않은 것이므로 API에 있는 버그를 찾기 쉽다. 그리고 중간 루트 예외를 정의하면 API에 다른 영향을 주지 않고 나중에 더 구체적인 예외를 추가할 수 있다. 
+
+<br/>
+
+## 의존성을 분리하고 재현하려면 가상 환경을 사용하자
+가상 환경은 pip을 사용하여 같은 머신에서 같은 패키지의 여러 버전을 충돌 없이 설치 할 수 있게 해준다. 가상환경은 pyvenv로 생성하며, source bin/activate로 활성화하고 deactivate로 비활성화 한다. Pip freeze로 환경에 대한 모든 요구 사항을 덤프할 수 있다. requirements.txt 파일을 pip install -r 명령의 인수로 전달하여 환경을 재현할 수 있다. 
+```
+pyvenv /tmp/myproject
+
+...
+
+source bin/activate
+(myproject)$
+
+...
+
+(myproject)$ deactivate
+
+```
+<br/>
+
+
+<a href="http://www.aladin.co.kr/shop/wproduct.aspx?ItemId=80277523">
+  <img class="book" style="width: 30%; height: 30%" src="http://image.aladin.co.kr/product/8027/75/cover/k212434638_1.jpg"/>
+</a>
