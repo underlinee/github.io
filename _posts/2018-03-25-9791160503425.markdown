@@ -3,7 +3,7 @@ layout: post
 title:  "이펙티브 SQL - 인덱스 설계와 프로그램적 처리"
 date:   2018-03-24 00:10:59
 categories: DevBook
-tags:	sql index 
+tags:	이펙티브SQL sql index 
 img: "http://image.aladin.co.kr/product/12442/12/cover/k802531656_1.jpg"
 shelf: true
 ---

@@ -3,7 +3,7 @@ layout: post
 title:  "리팩토링 - 객체 간의 기능 이동"
 date:   2018-04-04 00:00:59
 categories: DevBook
-tags:	refactoring 
+tags:	리팩토링 refactoring 
 ---
 
 기능을 넣을 적절한 위치를 찾는 문제는 **Move Method**와 **Move Field**를 실시해서 기능을 옮기면 해결된다. 보통 자신이 속한 객체보다 다른 객체를 더 많이 참조하는 것 같은 메서드를 찾아내서 다른 객체로 옮기면 된다. 두 기법을 모두 사용해야 할 때는 Move Field부터 실시한 후 Move Method를 실시하는 것이 좋다. 

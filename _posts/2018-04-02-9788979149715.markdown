@@ -3,7 +3,7 @@ layout: post
 title:  "리팩토링 - 코드의 구린내"
 date:   2018-04-01 18:43:59
 categories: DevBook
-tags:	refactoring 
+tags:	리팩토링 refactoring 
 ---
 
 ### 중복 코드

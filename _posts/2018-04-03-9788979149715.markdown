@@ -3,7 +3,7 @@ layout: post
 title:  "리팩토링 - 메서드 정리"
 date:   2018-04-03 00:00:01
 categories: DevBook
-tags:	refactoring 
+tags:	리팩토링 refactoring 
 ---
 
 리팩토링의 주된 작업은 코드를 포장하는 메서드를 적절히 정리하는 것이다. 거의 모든 문제점은 장황한 메서드로 인해 생긴다. 핵심적인 리팩토링 기법은 코드 뭉치를 별도의 메서드로 빼내는 **Extract Method**다. 그와 반대로 **Inline Method**는 메서드를 잘못 쪼갯을 때 호출되는 메서드의 내용을 호출하는 메서드에 직접 넣는 기법이다. 

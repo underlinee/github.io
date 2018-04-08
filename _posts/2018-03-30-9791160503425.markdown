@@ -3,7 +3,7 @@ layout: post
 title:  "이펙티브 SQL - 쿼리 플랜 분석하기"
 date:   2018-03-28 00:12:59
 categories: DevBook
-tags:	sql queryplan explain  
+tags:	이펙티브SQL sql queryplan explain  
 ---
 
 ## 사용 중인 시스템의 쿼리 분석기 사용법을 파악하자

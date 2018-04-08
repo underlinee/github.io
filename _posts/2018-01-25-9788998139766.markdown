@@ -3,7 +3,7 @@ layout: post
 title:  "객체지향의 사실과 오해 - 역할, 책임, 협력 관점에서 본 객체지향"
 date:   2018-02-05 16:43:59
 categories: DevBook
-tags:	객체지향의사실과오해 객체설계 조영호 
+tags:	객체지향의사실과오해 객체 
 img: "http://image.aladin.co.kr/product/6055/2/cover/8998139766_1.jpg"
 shelf: true
 ---

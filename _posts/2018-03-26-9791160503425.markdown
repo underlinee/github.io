@@ -3,7 +3,7 @@ layout: post
 title:  "이펙티브 SQL - 데이터 모델 설계를 변경할 수 없는 경우"
 date:   2018-03-25 00:10:59
 categories: DevBook
-tags:	sql union view  
+tags:	이펙티브SQL sql union view  
 ---
 
 ## 설계를 변경할 수 없을 때는 뷰로 데이터를 간소화하자

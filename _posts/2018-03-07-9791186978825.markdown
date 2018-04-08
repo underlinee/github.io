@@ -3,7 +3,7 @@ layout: post
 title:  "이펙티브 파이썬 - 협력"
 date:   2018-03-07 00:10:59
 categories: DevBook
-tags:	docstring package pyvenv exception
+tags:	이펙티브파이썬 docstring package pyvenv exception
 ---
 
 ## 모든 함수, 클래스, 모듈에 docstring을 작성하자

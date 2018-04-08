@@ -3,7 +3,7 @@ layout: post
 title:  "자바 성능 튜닝 - 힙 메모리 베스트 프랙티스"
 date:   2018-02-28 00:10:59
 categories: DevBook
-tags:	Java 힙 
+tags:	자바성능튜닝 Java 힙 
 ---
 
 ## 힙 분석

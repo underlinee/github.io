@@ -1,71 +1,83 @@
-# External gems
-# See http://ixti.net/software/2013/01/28/using-jekyll-plugins-on-github-pages.html for making `jekyll archives` work.
-gems:
-  - jekyll-archives # Sorry, not GitHub pages friendly!
-  - jekyll-sitemap
-  - jekyll-paginate
-  - jekyll-redirect-from
+# SITE CONFIGURATION
+baseurl: ""
+url: "https://underlinee.github.io"
 
-exclude:
-  - "/vendor/"
+# THEME-SPECIFIC CONFIGURATION
+theme_settings:
+  # Meta
+  title: Underlinee
+  avatar: 
+  favicon: 
+  gravatar: # Email MD5 hash
+  description: "A website with blog posts and pages" # used by search engines
 
-# Site settings
-title: Underlinee
-subtitle: "A simple blog"
-email: jb.squee@daum.net
-name: JB
-description: >
-# Base URL of site (i.e. /blog). It should always start with a slash,
-# and never end with a slash. Set it to a blank value if hosting at the
-# root of your server.
-baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://underlinee.github.io" # the base hostname & protocol for your site
-cover: "/assets/footer_image.jpg"
-logo: "/assets/logo.png"
+  # Header and footer text
+  header_text: 
+  header_text_feature_image: "assets/img/footer_image.jpg"
+  footer_text: " "
 
-# Build settings
-markdown: kramdown
+  # Icons
+  rss: true
+  email_address: jb.squee@daum.net # Full email address, e.g. "sam@example.com"
+  behance:
+  bitbucket:
+  dribbble:
+  facebook:
+  flickr:
+  gitlab:
+  github: "underlinee/underlinee.github.io"
+  google_plus:
+  instagram:
+  linkedin:  # Full URL
+  pinterest:
+  reddit:
+  soundcloud:
+  stack_exchange:  # Full URL
+  steam:
+  tumblr:
+  twitter:
+  wordpress:
+  youtube:
+
+  # Scripts
+  google_analytics: "UA-112755509-1" # Tracking ID, e.g. "UA-000000-01"
+  disqus_shortname: underlinee
+  katex: true # Enable if using math markup
+  search: false # Enable the search feature
+
+  # Localization strings
+  str_follow_on: "Follow on"
+  str_rss_follow: "Follow RSS feed"
+  str_email: "Email"
+  str_next_post: "Next post"
+  str_previous_post: "Previous post"
+  str_next_page: "Next"
+  str_previous_page: "Prev"
+  str_continue_reading: "Continue reading"
+  str_javascript_required_disqus: "Please enable JavaScript to view comments."
+  str_search_no_results: "No results found."
+
+  # Colours, typography and padding
+  # Open the "_sass > base" folder, and open "_variables.scss"
+  google_fonts: "Playfair+Display:400,700"
+
+  # Post navigation
+  post_navigation: false
+
+# PAGINATION
 paginate: 5
-paginate_path: "/page:num/"
-inter_post_navigation: false
-highlightjs_theme: "monokai-sublime"
+paginate_path: "blog/page:num"
 
-# Archive settings (see https://github.com/jekyll/jekyll-archives/)
-jekyll-archives:
-  enabled:
-    - categories
-    - tags
-  layout: 'archive'
-  permalinks:
-    category: '/category/:name/'
-    tag: '/tag/:name/'
+# BUILD SETTINGS
+markdown: kramdown
+highlighter: rouge
+sass:
+  sass_dir: _sass
+  style: :compressed
+plugins: [jekyll-paginate]
+theme: jekyll-theme-type
+exclude:
+  - Gemfile
+  - Gemfile.lock
 
-#Disqus comments
-disqus_shortname: underlinee
-
-#Google analytics
-ga_tracking_id: "UA-112755509-1"
-
-# Category descriptions (for archive pages)
-
-# Social icons and sharing options
-#
-# Social settings are used in two places:
-# * In the footer, as links to your personal profiles
-# * After each blog post for sharing widgets
-#
-# Example:
-#
-# social:
-#   - name: Twitter                         # Name of the service
-#     icon: twitter                         # Font Awesome icon to use (minus fa- prefix)
-#     username: "@TheBenCentra"             # (User) Name to display in the footer link
-#     url: https://twitter.com/TheBenCentra # URL of your profile (leave blank to not display in footer)
-#     desc: Follow me on Twitter            # Description to display as link title, etc
-#     share: true                           # Include in the "Share" section of posts
-
-# Social sharing protocols
-# These are for automatically generating sharing metadata for FB and Twitter
-# OS Protocol is for sharing the source of your site, if you're interested. For more, see osprotocol.com
-plugins_dir:
-  - jekyll-redirect-from
+fenced_code_blocks: true
