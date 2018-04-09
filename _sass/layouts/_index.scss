@@ -63,15 +63,24 @@
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-.book {
+.book-link {
     display: block;
     margin: auto;
-    width: 30%;
+    width: 40%; 
+    height: 40%;
     align: center;
     transition: 0.3s;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
-.book:hover {
+.book-link:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.book-wrapper {
+  margin: 2.5em;
+}
+
+.memo {
+  color: #92c8e5;
 }

@@ -7,10 +7,18 @@ layout: default
     {% if page.subtitle %}<h2 class="subtitle">{{ page.subtitle }}</h2>{% endif %}
     <p class="meta">
       {{ page.date | date: "%B %-d, %Y" }}
+      | {{ page.group }}
       {% if page.author %} - {{ page.author }}{% endif %}
     </p>
   </header>
   <section class="post-content">{{ content }}</section>
+  {% if page.booklink %}
+  <div class="book-wrapper">
+    <a href='{{ page.booklink }}'>
+      <img class="book-link" src='{{ page.bookimg }}'/>
+    </a>
+  </div>
+  {% endif %}
   {% include tags_list.html tags=page.tags tag_count=page.tags.size %}
 </article>
 

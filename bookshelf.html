@@ -3,23 +3,51 @@ layout: page
 title: bookshelf
 ---
 <ul class="posts-list">
-{% for category in site.categories %}
-  {% capture cat %}{{ category | first }}{% endcapture %}
-  {% for post in site.categories[cat] %}
-    {% if post.shelf == true %}
-      <li class="book-card">
-        <a href="tags.html#{{ post.tags[0]}}" src="{{ post.img }}">
-          <img src="{{ post.img }}" style="width:100%">
-        </a>
-      </li>
-    {% endif %}
-  {% endfor %}
-{% endfor %}
-      <li class="book-card">
-        <a href="tags.html#스프링5.0마이크로서비스">
-          <img class="book" style="width:100%" src="http://image.aladin.co.kr/product/13217/68/cover/k462532593_1.jpg"/>
-        </a>
-      </li>     
+  <li class="book-card">
+    <a href="tags.html#스프링5.0마이크로서비스">
+      <img style="width:100%" src="http://image.aladin.co.kr/product/13217/68/cover/k462532593_1.jpg"/>
+    </a>
+  </li> 
+  <li class="book-card">
+    <a href="tags.html#ReleaseIt">
+      <img style="width:100%" src="http://image.aladin.co.kr/product/100/65/cover/8992939108_1.jpg"/>
+    </a>
+  </li>   
+  <li class="book-card">
+    <a href="tags.html#객체지향의사실과오해">
+      <img style="width:100%" src="http://image.aladin.co.kr/product/6055/2/cover/8998139766_1.jpg"/>
+    </a>
+  </li>
+  <li class="book-card">
+    <a href="tags.html#리팩토링">
+      <img style="width:100%" src="http://image.aladin.co.kr/product/2079/30/cover/8979149719_1.jpg"/>
+    </a>
+  </li>        
+  <li class="book-card">
+    <a href="tags.html#유지보수가능한코딩의기술">
+      <img style="width:100%" src="http://image.aladin.co.kr/product/9854/69/cover/k292535351_1.jpg"/>
+    </a>
+  </li> 
+  <li class="book-card">
+    <a href="tags.html#이펙티브SQL">
+      <img style="width:100%" src="http://image.aladin.co.kr/product/12442/12/cover/k802531656_1.jpg"/>
+    </a>
+  </li> 
+  <li class="book-card">
+    <a href="tags.html#이펙티브파이썬">
+      <img style="width:100%" src="http://image.aladin.co.kr/product/8027/75/cover/k212434638_1.jpg"/>
+    </a>
+  </li> 
+  <li class="book-card">
+    <a href="tags.html#자바성능튜닝">
+      <img style="width:100%" src="http://image.aladin.co.kr/product/7924/83/cover/k542434036_1.jpg"/>
+    </a>
+  </li>
+  <li class="book-card">
+    <a href="tags.html#책읽는뇌">
+      <img style="width:100%" src="http://image.aladin.co.kr/product/417/6/cover/8952211936_1.jpg"/>
+    </a>
+  </li>
 </ul>
 
 <script>
