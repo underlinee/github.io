@@ -3,7 +3,7 @@ layout: post
 title:  "ModuleNotFoundError: No module named 해결하기"
 date:   2018-01-22 20:13:59
 group: 개발일지
-tags:   python import 
+tags:   python  
 ---
 
 pycharm 으로 run 시에는 잘 동작하는 스크립트가 커맨드 라인으로 실행시 다음과 같은 에러와 함께 실행에 실패했다. 

@@ -3,7 +3,7 @@ layout: post
 title:  "java.lang.NoSuchMethodError:"
 date:   2018-05-08 08:43:59
 group: 개발일지
-tags:   java classloader 
+tags:   java 
 ---
 
 서버에 요청시 아래와 같은 에러가 발생하여, 해결 과정을 정리했다. NoSuchMethodError이지만 해당 메서드는 소스코드 상에서는 분명히 존재하는 메서드이다. MimeUtility는 javamail 코드를 커스텀하게 수정하여 사용하고 있는 클래스로 이슈가 발생한 프로젝트의 javax.mail.internet 패키지에 별도로 클래스 파일을 관리하고 있다. 

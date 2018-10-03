@@ -3,7 +3,7 @@ layout: post
 title:  "logstash 6.1.2 모니터링을 위한 x-pack 세팅"
 date:   2018-01-19 16:43:59
 group: 개발일지
-tags:   logstash x-pack 
+tags:   etc
 ---
 
 

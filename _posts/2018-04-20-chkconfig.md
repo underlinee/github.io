@@ -3,7 +3,7 @@ layout: post
 title:  "서버 부팅시 자동 실행 스크립트 등록 - chkconfig"
 date:   2018-04-20 00:00:59
 group: 개발일지
-tags:   shell 
+tags:   linux 
 ---
 
 chkconfig는 /etc/rc[0-6].d 디렉토리를 유지보수하기 위한 도구다.

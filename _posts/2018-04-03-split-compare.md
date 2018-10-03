@@ -3,7 +3,7 @@ layout: post
 title:  "StringUtils.split vs String.split"
 date:   2018-04-02 00:00:59
 group: 개발일지
-tags:   java split 
+tags:   java 
 ---
 
 아래 코드에서 out of index 익셉션이 발생하는 버그가 있어서 원인을 확인해봤다. 

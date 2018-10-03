@@ -3,7 +3,7 @@ layout: post
 title:  "Array에 invalid한 값이 포함된 경우 default 값으로 변경하기"
 date:   2018-04-02 00:01:59
 group: 개발일지
-tags:   java array 
+tags:   java 
 ---
 
 특정 배열에서 값이 빈 문자열인 경우 빈 문자열 대신 default 값을 사용해야하는 이슈가 있어 

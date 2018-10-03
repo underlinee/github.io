@@ -3,7 +3,7 @@ layout: post
 title:  "gz 로그 파일 커맨드 라인으로 분석하기"
 date:   2018-03-26 00:00:59
 group: 개발일지
-tags:   shell log 
+tags:   linux 
 ---
 
 ## 로그 파일 분당 특정 로그가 나타나는 횟수 분석

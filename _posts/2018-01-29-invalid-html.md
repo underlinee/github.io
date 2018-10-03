@@ -3,7 +3,7 @@ layout: post
 title:  "크롤링 해 온 html에 원하는 값이 없다면"
 date:   2018-01-28 20:43:59
 group: 개발일지
-tags:   beautifulsoup crawling 
+tags:   etc 
 ---
 
 웹 사이트에서 잘 표시되는 컨텐츠를 크롤링 해왔을 때 파싱한 html에서 원하는 값을 찾을 수 없는 경우가 있다. 이런 상황에서 의심해 볼 수 있는 케이스를 정리했다. 
